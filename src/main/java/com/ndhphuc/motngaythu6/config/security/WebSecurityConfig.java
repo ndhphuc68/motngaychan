@@ -1,8 +1,7 @@
 package com.ndhphuc.motngaythu6.config.security;
 
-
-import com.ndhphuc.motngaythu6.config.jwt.JwtAuthenticationEntryPoint;
-import com.ndhphuc.motngaythu6.config.jwt.JwtAuthenticationFilter;
+import com.ndhphuc.motngaythu6.config.jwt.AuthEntryPointJwt;
+import com.ndhphuc.motngaythu6.config.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,17 +18,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableMethodSecurity
-public class SpringSecurityConfig {
+public class WebSecurityConfig {
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    CustomUserDetailsService userDetailsService;
-
-    @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
-    public JwtAuthenticationFilter authenticationJwtTokenFilter() {
-        return new JwtAuthenticationFilter();
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
     }
 
     @Bean
@@ -58,8 +56,8 @@ public class SpringSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/auth/**").permitAll().
-                                requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs", "/v3/api-docs/swagger-config").permitAll()
+                        auth.requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 

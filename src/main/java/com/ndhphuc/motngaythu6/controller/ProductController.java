@@ -1,12 +1,12 @@
 package com.ndhphuc.motngaythu6.controller;
 
 import com.ndhphuc.motngaythu6.dto.ProductDTO;
-import com.ndhphuc.motngaythu6.model.ApiResponse;
+import com.ndhphuc.motngaythu6.dto.ApiResponse;
 import com.ndhphuc.motngaythu6.model.Product;
 import com.ndhphuc.motngaythu6.service.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.models.annotations.OpenAPI31;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Product Controller")
@@ -30,6 +30,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse createProduct(@RequestBody ProductDTO productDTO) {
         ApiResponse apiResponse = new ApiResponse();
         try {
@@ -42,7 +43,8 @@ public class ProductController {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            apiResponse.setMessage(e.getMessage());
+            apiResponse.setSuccess(false);
         }
         return apiResponse;
     }

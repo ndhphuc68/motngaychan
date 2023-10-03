@@ -2,52 +2,26 @@ package com.ndhphuc.motngaythu6.model;
 
 import com.ndhphuc.motngaythu6.utils.RoleEnum;
 import jakarta.persistence.*;
+import lombok.Getter;
 
-import java.math.BigInteger;
-import java.util.Date;
-
+@Getter
 @Entity
 @Table(name = "roles")
 public class Role {
 
     @Id
-    private BigInteger roleId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    private BigInteger userId;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private RoleEnum name;
 
-    private String role;
-
-    private Date createDate = new Date();
-
-    public BigInteger getRoleId() {
-        return roleId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setRoleId(BigInteger roleId) {
-        this.roleId = roleId;
-    }
-
-    public BigInteger getUserId() {
-        return userId;
-    }
-
-    public void setUserId(BigInteger userId) {
-        this.userId = userId;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setName(RoleEnum name) {
+        this.name = name;
     }
 }
