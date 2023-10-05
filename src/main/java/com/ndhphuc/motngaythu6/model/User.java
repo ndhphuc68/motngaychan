@@ -25,6 +25,10 @@ public class User {
 
     private String email;
 
+    private String phone;
+
+    private int isBlock;
+
     private Date createDate = new Date();
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -59,5 +63,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setIsBlock(int isBlock) {
+        this.isBlock = isBlock;
     }
 }

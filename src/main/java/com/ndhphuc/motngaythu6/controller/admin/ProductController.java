@@ -1,4 +1,4 @@
-package com.ndhphuc.motngaythu6.controller;
+package com.ndhphuc.motngaythu6.controller.admin;
 
 import com.ndhphuc.motngaythu6.dto.ProductDTO;
 import com.ndhphuc.motngaythu6.dto.ApiResponse;
@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Product Controller")
+@Tag(name = "Product Admin Controller")
 @RestController
-@RequestMapping(value = "/api/v1/product")
+@RequestMapping(value = "/api/v1/admin/product")
 public class ProductController {
 
     @Autowired
