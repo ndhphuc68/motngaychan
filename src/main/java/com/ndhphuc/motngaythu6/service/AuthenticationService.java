@@ -26,49 +26,49 @@ public class AuthenticationService {
     @Autowired
     RoleRepository roleRepository;
 
-//    public boolean createUser(AuthenticationDTO authenticationDTO) {
-//        User user = userRepository.findByUsername(authenticationDTO.getUsername());
-//        if (user == null) {
-//            User userCreate = new User();
-//            userCreate.setName(authenticationDTO.getName());
-//            userCreate.setUsername(authenticationDTO.getUsername());
-//            userCreate.setPassword(encoder.encode(authenticationDTO.getPassword()));
-//            userCreate.setCreateDate(new Date());
-//
-//            Set<Role> roles = new HashSet<>();
-//            Set<String> strRoles = authenticationDTO.getRole();
-//
-//            if (strRoles == null) {
-//                Role userRole = roleRepository.findByName(RoleEnum.ROLE_USER)
-//                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                roles.add(userRole);
-//            } else {
-//                strRoles.forEach(role -> {
-//                    switch (role) {
-//                        case "admin":
-//                            Role adminRole = roleRepository.findByName(RoleEnum.ROLE_ADMIN)
-//                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                            roles.add(adminRole);
-//
-//                            break;
-//                        case "mod":
-//                            Role modRole = roleRepository.findByName(RoleEnum.ROLE_MODERATOR)
-//                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                            roles.add(modRole);
-//
-//                            break;
-//                        default:
-//                            Role userRole = roleRepository.findByName(RoleEnum.ROLE_USER)
-//                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                            roles.add(userRole);
-//                    }
-//                });
-//            }
-//
-//            userCreate.setRoles(roles);
-//            userRepository.save(userCreate);
-//            return true;
-//        }
-//        return false;
-//    }
+    public boolean createUser(AuthenticationDTO authenticationDTO) {
+        User user = userRepository.findByUsername(authenticationDTO.getUsername());
+        if (user == null) {
+            User userCreate = new User();
+            userCreate.setName(authenticationDTO.getName());
+            userCreate.setUsername(authenticationDTO.getUsername());
+            userCreate.setPassword(encoder.encode(authenticationDTO.getPassword()));
+            userCreate.setCreateDate(new Date());
+
+            Set<Role> roles = new HashSet<>();
+            Set<String> strRoles = authenticationDTO.getRole();
+
+            if (strRoles == null) {
+                Role userRole = roleRepository.findByName(RoleEnum.ROLE_USER)
+                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                roles.add(userRole);
+            } else {
+                strRoles.forEach(role -> {
+                    switch (role) {
+                        case "admin":
+                            Role adminRole = roleRepository.findByName(RoleEnum.ROLE_ADMIN)
+                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                            roles.add(adminRole);
+
+                            break;
+                        case "mod":
+                            Role modRole = roleRepository.findByName(RoleEnum.ROLE_MODERATOR)
+                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                            roles.add(modRole);
+
+                            break;
+                        default:
+                            Role userRole = roleRepository.findByName(RoleEnum.ROLE_USER)
+                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                            roles.add(userRole);
+                    }
+                });
+            }
+
+            userCreate.setRoles(roles);
+            userRepository.save(userCreate);
+            return true;
+        }
+        return false;
+    }
 }

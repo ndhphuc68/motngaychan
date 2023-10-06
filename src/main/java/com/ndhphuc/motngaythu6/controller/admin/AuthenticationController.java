@@ -69,20 +69,20 @@ public class AuthenticationController {
     return apiResponse;
   }
 
-//  @PostMapping(value = "/signup")
-//  public ApiResponse signup(@RequestBody AuthenticationDTO authenticationDTO) {
-//    ApiResponse apiResponse = new ApiResponse();
-//    try {
-//      if (authenticationDTO == null) {
-//        apiResponse.setSuccess(false);
-//        apiResponse.setMessage("Data null");
-//        return apiResponse;
-//      }
-//      apiResponse.setSuccess(authenticationService.createUser(authenticationDTO));
-//      apiResponse.setMessage("Create Success");
-//    } catch (Exception e) {
-//      apiResponse.setMessage(e.getMessage());
-//    }
-//    return apiResponse;
-//  }
+  @PostMapping(value = "/signup")
+  public ApiResponse signup(@RequestBody AuthenticationDTO authenticationDTO) {
+    ApiResponse apiResponse = new ApiResponse();
+    try {
+      if (authenticationDTO == null) {
+        apiResponse.setSuccess(false);
+        apiResponse.setMessage("Data null");
+        return apiResponse;
+      }
+      apiResponse.setSuccess(authenticationService.createUser(authenticationDTO));
+      apiResponse.setMessage("Create Success");
+    } catch (Exception e) {
+      apiResponse.setMessage(e.getMessage());
+    }
+    return apiResponse;
+  }
 }

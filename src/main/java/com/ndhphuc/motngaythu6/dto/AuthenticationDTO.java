@@ -11,17 +11,17 @@ public class AuthenticationDTO {
 
     private String password;
 
-//    private String name;
-//
-//    private Set<String> role;
+    private String name;
 
-//    public void setRole(Set<String> role) {
-//        this.role = role;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
+    private Set<String> role;
+
+    public void setRole(Set<String> role) {
+        this.role = role;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void setUsername(String username) {
         this.username = username;
