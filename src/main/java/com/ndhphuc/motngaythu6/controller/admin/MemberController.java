@@ -54,10 +54,10 @@ public class MemberController {
   }
 
   @GetMapping(value = "/list-member")
-  public ApiResponse getListMember(@RequestParam(required = false) String username) {
+  public ApiResponse getListMember(@RequestParam(required = false) String username, @RequestParam(required = false, defaultValue = "0") Integer isBlock) {
     ApiResponse apiResponse = new ApiResponse();
     try {
-      apiResponse.setData(memberService.getListMember());
+      apiResponse.setData(memberService.getListMember(username, isBlock));
       apiResponse.setSuccess(true);
     } catch (Exception e) {
       apiResponse.setSuccess(false);

@@ -11,8 +11,12 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, BigInteger> {
-    User findByUsername(String username);
+  User findByUsername(String username);
 
-    @Query(value = "select u.* from user u join user_roles ur on u.id = ur.user_id join roles r on ur.role_id = r.id where r.name = :role",nativeQuery = true)
-    List<User> getListUserByRoles(String role);
+  @Query(value = "select u.* from user u join user_roles ur on u.id = ur.user_id " +
+          "join roles r on ur.role_id = r.id " +
+          "where r.name = :role " +
+          "and case when ( :name is not null) then (u.name like :name) else (1=1) end " +
+          "and u.is_block = :isBlock", nativeQuery = true)
+  List<User> getListUserByRoles(String role, String name, Integer isBlock);
 }

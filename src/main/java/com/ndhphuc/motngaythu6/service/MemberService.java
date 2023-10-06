@@ -10,6 +10,7 @@ import com.ndhphuc.motngaythu6.utils.RoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -47,8 +48,8 @@ public class MemberService {
     }
   }
 
-  public List<CreateMemberDTO> getListMember() {
-    List<User> listUser = userRepository.getListUserByRoles(RoleEnum.ROLE_USER.toString());
+  public List<CreateMemberDTO> getListMember(String username, Integer isBlock) {
+    List<User> listUser = userRepository.getListUserByRoles(RoleEnum.ROLE_USER.toString(), username, isBlock);
     if (listUser != null) {
       List<CreateMemberDTO> listMember = new ArrayList<>();
       CreateMemberDTO createMemberDTO = null;
@@ -67,16 +68,16 @@ public class MemberService {
     return null;
   }
 
-  public boolean actionMember(String username,String type){
+  public boolean actionMember(String username, String type) {
     User user = userRepository.findByUsername(username);
-    if(user != null){
-      if(ActionUser.DELETE.getAction().equals(type)){
+    if (user != null) {
+      if (ActionUser.DELETE.getAction().equals(type)) {
         userRepository.delete(user);
         return true;
-      }else if(ActionUser.BLOCK.getAction().equals(type)){
-        if(user.getIsBlock() == 1){
+      } else if (ActionUser.BLOCK.getAction().equals(type)) {
+        if (user.getIsBlock() == 1) {
           user.setIsBlock(0);
-        }else{
+        } else {
           user.setIsBlock(1);
         }
         userRepository.save(user);

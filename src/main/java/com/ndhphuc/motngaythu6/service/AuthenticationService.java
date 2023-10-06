@@ -38,7 +38,7 @@ public class AuthenticationService {
             Set<Role> roles = new HashSet<>();
             Set<String> strRoles = authenticationDTO.getRole();
 
-            if (strRoles == null) {
+            if (strRoles == null) { 
                 Role userRole = roleRepository.findByName(RoleEnum.ROLE_USER)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                 roles.add(userRole);
