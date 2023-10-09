@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Member Admin Controller")
 @RestController
 @RequestMapping(value = "/api/v1/admin/member")
+@CrossOrigin(origins = "*")
 @PreAuthorize("hasRole('ADMIN')")
 public class MemberController {
 

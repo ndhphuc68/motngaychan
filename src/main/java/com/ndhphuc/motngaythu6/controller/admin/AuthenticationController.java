@@ -5,6 +5,11 @@ import com.ndhphuc.motngaythu6.config.security.UserDetailsImpl;
 import com.ndhphuc.motngaythu6.dto.ApiResponse;
 
 import com.ndhphuc.motngaythu6.dto.AuthenticationDTO;
+import com.ndhphuc.motngaythu6.dto.LoginDTO;
+import com.ndhphuc.motngaythu6.model.Role;
+import com.ndhphuc.motngaythu6.model.User;
+import com.ndhphuc.motngaythu6.repository.RoleRepository;
+import com.ndhphuc.motngaythu6.repository.UserRepository;
 import com.ndhphuc.motngaythu6.service.AuthenticationService;
 import com.ndhphuc.motngaythu6.utils.RoleEnum;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,19 +19,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Tag(name = "Authentication Admin Controller")
 @RestController
 @RequestMapping(value = "/api/v1/auth/admin")
+@CrossOrigin(origins = "*")
 public class AuthenticationController {
 
   @Autowired
@@ -38,14 +39,29 @@ public class AuthenticationController {
   @Autowired
   JwtUtils jwtUtils;
 
+  @Autowired
+  UserRepository userRepository;
+
+  @Autowired
+  RoleRepository roleRepository;
+
   @PostMapping(value = "/login")
-  public ApiResponse login(@RequestBody AuthenticationDTO authenticationDTO) {
+  public ApiResponse login(@RequestBody LoginDTO authenticationDTO) {
     ApiResponse apiResponse = new ApiResponse();
     try {
       if (authenticationDTO.getUsername() == null || authenticationDTO.getPassword() == null) {
         apiResponse.setSuccess(false);
         return apiResponse;
       }
+
+      User user = userRepository.findByUsername(authenticationDTO.getUsername());
+
+      if(user == null){
+        apiResponse.setSuccess(false);
+        apiResponse.setMessage("User NotFound");
+        return apiResponse;
+      }
+
       Authentication authentication = authenticationManager.authenticate(
               new UsernamePasswordAuthenticationToken(authenticationDTO.getUsername(), authenticationDTO.getPassword()));
 
@@ -57,13 +73,22 @@ public class AuthenticationController {
               .map(GrantedAuthority::getAuthority)
               .collect(Collectors.toList());
 
-      apiResponse.setSuccess(true);
-      Map<String, Object> map = new HashMap<>();
-      map.put("token", jwt);
-      map.put("roles", roles);
-      map.put("username", userDetails.getUsername());
-      apiResponse.setData(map);
+      for(String role : roles){
+        if(role.equals("ROLE_ADMIN")){
+          apiResponse.setSuccess(true);
+          Map<String, Object> map = new HashMap<>();
+          map.put("token", jwt);
+          map.put("roles", roles);
+          map.put("username", userDetails.getUsername());
+          apiResponse.setData(map);
+          return apiResponse;
+        }
+      }
+      apiResponse.setSuccess(false);
+      apiResponse.setMessage("Account has no permissions");
+
     } catch (Exception e) {
+      apiResponse.setSuccess(false);
       apiResponse.setMessage(e.getMessage());
     }
     return apiResponse;

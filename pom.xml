@@ -11,7 +11,7 @@
     <groupId>com.ndhphuc</groupId>
     <artifactId>motngaythu6</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-<!--    <packaging>jar</packaging>-->
+    <packaging>war</packaging>
     <name>motngaythu6</name>
     <description>motngaythu6</description>
     <properties>
@@ -27,12 +27,15 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.11.0</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

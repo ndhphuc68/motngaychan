@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Product Admin Controller")
 @RestController
 @RequestMapping(value = "/api/v1/admin/product")
+@CrossOrigin
+@PreAuthorize("hasRole('ADMIN')")
 public class ProductController {
 
     @Autowired
@@ -30,7 +32,6 @@ public class ProductController {
     }
 
     @PostMapping(value = "/create")
-    @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse createProduct(@RequestBody ProductDTO productDTO) {
         ApiResponse apiResponse = new ApiResponse();
         try {
