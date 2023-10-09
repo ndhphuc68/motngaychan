@@ -11,7 +11,7 @@
     <groupId>com.ndhphuc</groupId>
     <artifactId>motngaythu6</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+<!--    <packaging>war</packaging>-->
     <name>motngaythu6</name>
     <description>motngaythu6</description>
     <properties>
