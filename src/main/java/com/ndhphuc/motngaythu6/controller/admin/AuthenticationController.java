@@ -19,6 +19,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -56,9 +58,15 @@ public class AuthenticationController {
 
       User user = userRepository.findByUsername(authenticationDTO.getUsername());
 
-      if(user == null){
+      if (user == null) {
         apiResponse.setSuccess(false);
         apiResponse.setMessage("User NotFound");
+        return apiResponse;
+      }
+      PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+      if (!passwordEncoder.matches(authenticationDTO.getPassword(), user.getPassword())) {
+        apiResponse.setSuccess(false);
+        apiResponse.setMessage("Password NotFound");
         return apiResponse;
       }
 
@@ -73,8 +81,8 @@ public class AuthenticationController {
               .map(GrantedAuthority::getAuthority)
               .collect(Collectors.toList());
 
-      for(String role : roles){
-        if(role.equals("ROLE_ADMIN")){
+      for (String role : roles) {
+        if (role.equals("ROLE_ADMIN")) {
           apiResponse.setSuccess(true);
           Map<String, Object> map = new HashMap<>();
           map.put("token", jwt);

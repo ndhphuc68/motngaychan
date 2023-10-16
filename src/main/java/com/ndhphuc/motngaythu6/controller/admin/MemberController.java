@@ -55,10 +55,10 @@ public class MemberController {
   }
 
   @GetMapping(value = "/list-member")
-  public ApiResponse getListMember(@RequestParam(required = false) String username, @RequestParam(required = false, defaultValue = "0") Integer isBlock) {
+  public ApiResponse getListMember(@RequestParam(required = false) String textSearch, @RequestParam(required = false) String username, @RequestParam(required = false) Integer isBlock) {
     ApiResponse apiResponse = new ApiResponse();
     try {
-      apiResponse.setData(memberService.getListMember(username, isBlock));
+      apiResponse.setData(memberService.getListMember(username, isBlock,textSearch));
       apiResponse.setSuccess(true);
     } catch (Exception e) {
       apiResponse.setSuccess(false);
@@ -68,7 +68,7 @@ public class MemberController {
   }
 
   @GetMapping(value = "/action")
-  public ApiResponse getListMember(@RequestParam String username, @RequestParam String type) {
+  public ApiResponse actionMember(@RequestParam String username, @RequestParam String type) {
     ApiResponse apiResponse = new ApiResponse();
     try {
       if (!StringUtils.hasText(username) || !StringUtils.hasText(type)) {

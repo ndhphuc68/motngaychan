@@ -23,8 +23,6 @@ public class CategoryDTO {
     this.isBlock = isBlock;
   }
 
-  private List<CategoryDTO> children;
-
   public void setId(Integer id) {
     this.id = id;
   }
@@ -44,8 +42,5 @@ public class CategoryDTO {
   public void setCreateDate(Date createDate) {
     this.createDate = createDate;
   }
-
-  public void setChildren(List<CategoryDTO> children) {
-    this.children = children;
-  }
+  
 }

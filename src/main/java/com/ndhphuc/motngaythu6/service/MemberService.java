@@ -48,8 +48,19 @@ public class MemberService {
     }
   }
 
-  public List<CreateMemberDTO> getListMember(String username, Integer isBlock) {
-    List<User> listUser = userRepository.getListUserByRoles(RoleEnum.ROLE_USER.toString(), username, isBlock);
+  public List<CreateMemberDTO> getListMember(String username, Integer isBlock, String textSearch) {
+    List<Integer> listBlock = new ArrayList<>();
+    if (isBlock == null) {
+      listBlock.add(1);
+      listBlock.add(0);
+    } else {
+      listBlock.add(isBlock);
+    }
+    String search = "%%";
+    if (textSearch != null) {
+      search = "%" + textSearch + "%";
+    }
+    List<User> listUser = userRepository.getListUserByRoles(RoleEnum.ROLE_USER.toString(), username, listBlock, search);
     if (listUser != null) {
       List<CreateMemberDTO> listMember = new ArrayList<>();
       CreateMemberDTO createMemberDTO = null;

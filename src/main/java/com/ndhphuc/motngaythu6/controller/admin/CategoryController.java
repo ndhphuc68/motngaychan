@@ -7,6 +7,7 @@ import com.ndhphuc.motngaythu6.service.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Category Admin Controller")
@@ -23,7 +24,7 @@ public class CategoryController {
   public ApiResponse createCategory(@RequestBody CategoryCreateDTO createDTO) {
     ApiResponse apiResponse = new ApiResponse();
     try {
-      if(createDTO == null){
+      if (createDTO == null) {
         apiResponse.setMessage("No value");
         apiResponse.setSuccess(false);
         return apiResponse;
@@ -47,6 +48,22 @@ public class CategoryController {
     } catch (Exception e) {
       apiResponse.setMessage(e.getMessage());
       apiResponse.setSuccess(false);
+    }
+    return apiResponse;
+  }
+
+  @GetMapping(value = "/action")
+  public ApiResponse actionCategory(@RequestParam Integer categoryId, @RequestParam String type) {
+    ApiResponse apiResponse = new ApiResponse();
+    try {
+      if (categoryId == null) {
+        apiResponse.setSuccess(false);
+      }
+      apiResponse.setSuccess(categoryService.actionCategory(categoryId, type));
+      apiResponse.setMessage("Success");
+    } catch (Exception e) {
+      apiResponse.setSuccess(false);
+      apiResponse.setMessage(e.getMessage());
     }
     return apiResponse;
   }

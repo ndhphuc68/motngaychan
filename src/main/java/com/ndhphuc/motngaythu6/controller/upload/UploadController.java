@@ -2,6 +2,7 @@ package com.ndhphuc.motngaythu6.controller.upload;
 
 
 import com.ndhphuc.motngaythu6.dto.ApiResponse;
+import com.ndhphuc.motngaythu6.dto.UploadDTO;
 import com.ndhphuc.motngaythu6.model.Upload;
 import com.ndhphuc.motngaythu6.repository.UploadRepository;
 import com.ndhphuc.motngaythu6.service.UploadService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Tag(name = "Upload Controller")
 @RestController
@@ -27,10 +29,24 @@ public class UploadController {
   UploadRepository uploadRepository;
 
   @PostMapping(value = "/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-  public ApiResponse uploadImage(@RequestParam("file") MultipartFile file) {
+  public ApiResponse uploadImage(@RequestParam("file") List<MultipartFile> file) {
     ApiResponse apiResponse = new ApiResponse();
     try {
-      apiResponse.setSuccess(uploadService.saveFile(file));
+      apiResponse.setData(uploadService.saveFile(file));
+      apiResponse.setSuccess(true);
+    } catch (Exception e) {
+      apiResponse.setMessage(e.getMessage());
+      apiResponse.setSuccess(false);
+    }
+    return apiResponse;
+  }
+
+  @PostMapping(value = "/imageV2")
+  public ApiResponse uploadImageV2(@RequestBody List<UploadDTO> uploadDTO) {
+    ApiResponse apiResponse = new ApiResponse();
+    try {
+      apiResponse.setData(uploadService.saveFileV2(uploadDTO));
+      apiResponse.setSuccess(true);
     } catch (Exception e) {
       apiResponse.setMessage(e.getMessage());
       apiResponse.setSuccess(false);

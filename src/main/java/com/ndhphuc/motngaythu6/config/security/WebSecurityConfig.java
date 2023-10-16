@@ -69,7 +69,7 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(auth ->
                     auth.requestMatchers("/api/v1/auth/admin/**").permitAll()
                             .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                            .requestMatchers("/api/v1/upload/**").permitAll()
+                            .requestMatchers("/api/v1/upload/image/**","/api/v1/upload/image", "/api/v1/category/**").permitAll()
                             .anyRequest().authenticated()
             );
 

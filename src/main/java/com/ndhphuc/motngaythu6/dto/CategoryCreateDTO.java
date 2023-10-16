@@ -4,11 +4,17 @@ import lombok.Getter;
 
 @Getter
 public class CategoryCreateDTO {
+  private Integer id;
+
   private Integer parentCategoryId;
 
   private String nameCategory;
 
   private String description;
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
   public void setParentCategoryId(Integer parentCategoryId) {
     this.parentCategoryId = parentCategoryId;
