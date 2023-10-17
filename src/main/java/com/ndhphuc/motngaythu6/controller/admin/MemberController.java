@@ -46,6 +46,7 @@ public class MemberController {
         apiResponse.setMessage("Data null");
         return apiResponse;
       }
+      apiResponse.setData(memberService.updateMember(memberDTO));
       apiResponse.setMessage("Update Member Success");
     } catch (Exception e) {
       apiResponse.setSuccess(false);

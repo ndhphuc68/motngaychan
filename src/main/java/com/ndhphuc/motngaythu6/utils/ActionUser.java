@@ -1,5 +1,8 @@
 package com.ndhphuc.motngaythu6.utils;
 
+import lombok.Getter;
+
+@Getter
 public enum ActionUser {
   BLOCK("BLOCK"),
   DELETE("DELETE");
@@ -10,7 +13,4 @@ public enum ActionUser {
     this.action = action;
   }
 
-  public String getAction() {
-    return action;
-  }
 }

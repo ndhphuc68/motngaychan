@@ -6,11 +6,18 @@ import java.math.BigDecimal;
 
 @Getter
 public class CreateProductSkuPriceDTO {
+
+  private Integer productSkuCode;
+
   private String productCode;
 
   private String nameSale;
 
   private BigDecimal price;
+
+  public void setProductSkuCode(Integer productSkuCode) {
+    this.productSkuCode = productSkuCode;
+  }
 
   public void setProductCode(String productCode) {
     this.productCode = productCode;

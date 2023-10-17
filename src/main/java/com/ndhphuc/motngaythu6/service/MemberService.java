@@ -48,6 +48,19 @@ public class MemberService {
     }
   }
 
+  public boolean updateMember(CreateMemberDTO memberDTO) throws Exception {
+    User user = userRepository.findByUsername(memberDTO.getUsername());
+    if (user != null) {;
+      user.setName(memberDTO.getName());
+      user.setEmail(memberDTO.getEmail());
+      user.setPhone(memberDTO.getPhone());
+      userRepository.save(user);
+      return true;
+    } else {
+      throw new Exception("User không tồn tại");
+    }
+  }
+
   public List<CreateMemberDTO> getListMember(String username, Integer isBlock, String textSearch) {
     List<Integer> listBlock = new ArrayList<>();
     if (isBlock == null) {

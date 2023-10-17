@@ -25,9 +25,21 @@ public class ProductDTO {
 
     private Date createDate;
 
+    private int isSale;
+
     private List<Integer> categoryId;
 
     private List<Category> categories;
+
+    private List<String> urlImage;
+
+    public void setIsSale(int isSale) {
+        this.isSale = isSale;
+    }
+
+    public void setUrlImage(List<String> urlImage) {
+        this.urlImage = urlImage;
+    }
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;

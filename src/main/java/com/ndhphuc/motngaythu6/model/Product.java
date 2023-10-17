@@ -33,6 +33,12 @@ public class Product {
 
     private Date updateDate;
 
+    private Integer isDelete = 0;
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
+
     public void setProductCode(String productCode) {
         this.productCode = productCode;
     }
